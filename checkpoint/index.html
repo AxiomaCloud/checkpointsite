@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHECKPOINT by AXIOMA - Control de Asistencia y Gestión de Personal</title>
+    <meta name="description" content="Fichá simple, liquidá fácil. Gestión de fichadas con geolocalización, novedades, legajos, evaluación de desempeño, onboarding y reportes para liquidación de sueldos.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#332449',
+                        secondary: '#4a3564',
+                        accent: '#6b5b95',
+                        gold: '#F8D820',
+                        goldLight: '#FCE5B7',
+                        accentPink: '#F1ABB5',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #332449 0%, #6b5b95 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #F8D820 0%, #FCE5B7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-3d {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-3d:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(51, 36, 73, 0.3), 0 10px 10px -5px rgba(51, 36, 73, 0.2);
+        }
+
+        .icon-relief {
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #F8D820 0%, #f5c600 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(248, 216, 32, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6b5b95 0%, #5a4a84 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(107, 91, 149, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animación para los screenshots */
+        .screenshot-gallery {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .screenshot-item {
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="https://axiomacloud.com/" target="_blank" rel="noopener noreferrer" class="transition hover:opacity-80">
+                        <img src="assets/images/axioma_logo.png" alt="AXIOMA Logo" class="h-12">
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#funcionalidades" class="text-gray-700 hover:text-primary transition">Funcionalidades</a>
+                    <a href="#caracteristicas" class="text-gray-700 hover:text-primary transition">Características</a>
+                    <a href="#beneficios" class="text-gray-700 hover:text-primary transition">Beneficios</a>
+                    <a href="#screenshots" class="text-gray-700 hover:text-primary transition">Capturas</a>
+                    <a href="#contacto" class="text-gray-700 hover:text-primary transition">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-gradient-to-br from-gold/30 to-transparent"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center py-20">
+                <!-- Icon + Title -->
+                <div class="mb-8 flex justify-center items-center">
+                    <div class="bg-gold rounded-full p-6 mr-6 shadow-2xl">
+                        <i class="fas fa-map-marker-alt text-primary text-6xl"></i>
+                    </div>
+                    <h1 class="text-6xl md:text-8xl font-extrabold text-white leading-tight text-left">
+                        CHECKPOINT
+                    </h1>
+                </div>
+
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Fichá simple,</span><br/>
+                    <span class="gradient-text">liquidá fácil</span>
+                </h2>
+
+                <p class="text-xl md:text-2xl text-gray-100 mb-8 max-w-4xl mx-auto leading-relaxed">
+                    Control de asistencia con <strong>geolocalización</strong> para equipos en la calle, gestión de <strong>novedades</strong>,
+                    <strong>legajos digitales</strong>, <strong>evaluación de desempeño</strong>, <strong>onboarding automatizado</strong>
+                    y <strong>reportes completos</strong> para liquidación de sueldos
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+                    <a href="#screenshots" class="btn-primary px-10 py-5 rounded-full text-primary font-bold text-xl inline-flex items-center shadow-2xl">
+                        Ver capturas del sistema <i class="fas fa-images ml-3"></i>
+                    </a>
+                    <a href="#contacto" class="btn-secondary px-10 py-5 rounded-full text-white font-bold text-xl inline-flex items-center shadow-2xl">
+                        Solicitar demo <i class="fas fa-envelope ml-3"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso Rápido -->
+    <section id="funcionalidades" class="py-16 bg-gradient-to-r from-primary to-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="text-white">
+                    <div class="text-6xl mb-4 icon-relief">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">1. Fichá desde el móvil</h3>
+                    <p class="text-gray-200 leading-relaxed">
+                        App Android nativa con geolocalización automática.
+                        iOS disponible como add-on. También funciona en tablets.
+                    </p>
+                </div>
+                <div class="text-white">
+                    <div class="text-6xl mb-4 icon-relief">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">2. Biometría opcional</h3>
+                    <p class="text-gray-200 leading-relaxed">
+                        Reconocimiento facial integrado o biométrico con accesorio
+                        para máxima seguridad en fichadas.
+                    </p>
+                </div>
+                <div class="text-white">
+                    <div class="text-6xl mb-4 icon-relief">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">3. Exportá y liquidá</h3>
+                    <p class="text-gray-200 leading-relaxed">
+                        Reportes completos exportables a Excel, CSV, TXT o el formato
+                        que necesites para tu sistema de liquidación.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Características Principales -->
+    <section id="caracteristicas" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+                    Características principales
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Todo lo que necesitas para gestionar el control de asistencia de tu equipo
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-3d bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl border border-blue-100">
+                    <div class="text-5xl text-blue-600 mb-4">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Geolocalización inteligente</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Cada fichada registra la <strong>ubicación GPS exacta</strong> del empleado.
+                        Perfecto para equipos en la calle, vendedores y personal de campo.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card-3d bg-gradient-to-br from-green-50 to-white p-8 rounded-2xl border border-green-100">
+                    <div class="text-5xl text-green-600 mb-4">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Gestión de novedades</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Vacaciones, enfermedades, estudios, permisos. <strong>Totalmente configurable</strong>
+                        según tus necesidades. Define tus propios tipos de novedades.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card-3d bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl border border-purple-100">
+                    <div class="text-5xl text-purple-600 mb-4">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Aprobaciones configurables</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Define <strong>flujos de aprobación</strong> personalizados.
+                        Supervisores pueden aprobar o rechazar fichadas y novedades.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="card-3d bg-gradient-to-br from-yellow-50 to-white p-8 rounded-2xl border border-yellow-100">
+                    <div class="text-5xl text-yellow-600 mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Dashboard en tiempo real</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Visualiza <strong>quién está fichado ahora</strong>, reportes de asistencia,
+                        horas trabajadas y análisis de ausentismo en tiempo real.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="card-3d bg-gradient-to-br from-red-50 to-white p-8 rounded-2xl border border-red-100">
+                    <div class="text-5xl text-red-600 mb-4">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Legajos completos</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Gestiona <strong>datos personales, familiares, laborales, documentos y más</strong>.
+                        Todo centralizado en un solo lugar con campos personalizables.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="card-3d bg-gradient-to-br from-indigo-50 to-white p-8 rounded-2xl border border-indigo-100">
+                    <div class="text-5xl text-indigo-600 mb-4">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Biometría avanzada</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Reconocimiento <strong>facial integrado</strong> en la app o
+                        <strong>biométrico con accesorio</strong> para fichadas ultrarrápidas y seguras.
+                    </p>
+                </div>
+
+                <!-- Feature 7 -->
+                <div class="card-3d bg-gradient-to-br from-pink-50 to-white p-8 rounded-2xl border border-pink-100">
+                    <div class="text-5xl text-pink-600 mb-4">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Todo tipo de fichadas</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        <strong>Entrada, salida, breaks, horas extras</strong> y cualquier tipo
+                        personalizado que necesites. Sistema 100% flexible.
+                    </p>
+                </div>
+
+                <!-- Feature 8 -->
+                <div class="card-3d bg-gradient-to-br from-teal-50 to-white p-8 rounded-2xl border border-teal-100">
+                    <div class="text-5xl text-teal-600 mb-4">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Integración total</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        <strong>API REST completa</strong> para integrar con cualquier sistema.
+                        Conecta con Tango, SAP, Odoo o tu ERP personalizado.
+                    </p>
+                </div>
+
+                <!-- Feature 9 -->
+                <div class="card-3d bg-gradient-to-br from-orange-50 to-white p-8 rounded-2xl border border-orange-100">
+                    <div class="text-5xl text-orange-600 mb-4">
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Tablas maestras flexibles</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Define <strong>lugares, puestos de trabajo, obras sociales</strong> y
+                        cualquier categoría que necesites. Sistema totalmente parametrizable.
+                    </p>
+                </div>
+
+                <!-- Feature 10 -->
+                <div class="card-3d bg-gradient-to-br from-cyan-50 to-white p-8 rounded-2xl border border-cyan-100">
+                    <div class="text-5xl text-cyan-600 mb-4">
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Evaluación de desempeño</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Crea <strong>formularios de evaluación personalizados</strong>, define KPIs,
+                        programa evaluaciones periódicas y genera reportes de desempeño del personal.
+                    </p>
+                </div>
+
+                <!-- Feature 11 -->
+                <div class="card-3d bg-gradient-to-br from-rose-50 to-white p-8 rounded-2xl border border-rose-100">
+                    <div class="text-5xl text-rose-600 mb-4">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-primary mb-3">Onboarding digital</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        <strong>Incorpora nuevos empleados</strong> con flujos automatizados: documentación,
+                        capacitaciones, asignación de recursos y seguimiento del proceso completo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beneficios Section -->
+    <section id="beneficios" class="py-20 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Beneficios que transforman tu gestión
+                </h2>
+                <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+                    Resultados medibles desde el primer día
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-3d border border-white/20">
+                    <div class="text-6xl font-extrabold text-gold mb-2">50%</div>
+                    <p class="text-xl text-white font-semibold">Más rápido que métodos tradicionales</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-3d border border-white/20">
+                    <div class="text-6xl font-extrabold text-gold mb-2">70%</div>
+                    <p class="text-xl text-white font-semibold">Reducción en tiempo de liquidación</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-3d border border-white/20">
+                    <div class="text-6xl font-extrabold text-gold mb-2">95%</div>
+                    <p class="text-xl text-white font-semibold">Menos errores en cálculos de horas</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-3d border border-white/20">
+                    <div class="text-6xl font-extrabold text-gold mb-2">100%</div>
+                    <p class="text-xl text-white font-semibold">Trazabilidad de asistencias</p>
+                </div>
+            </div>
+
+            <!-- ROI Box -->
+            <div class="bg-gold text-primary rounded-2xl p-10 max-w-5xl mx-auto shadow-2xl">
+                <h3 class="text-3xl font-bold mb-8 text-center">Retorno de Inversión</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-4xl mr-4 mt-1"></i>
+                        <div>
+                            <p class="font-bold text-xl mb-1">Ahorro en liquidaciones</p>
+                            <p class="text-primary/80 text-lg">15-20 horas mensuales ahorradas en cálculos manuales y verificación de asistencias</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-4xl mr-4 mt-1"></i>
+                        <div>
+                            <p class="font-bold text-xl mb-1">Reducción de fraude</p>
+                            <p class="text-primary/80 text-lg">$8,000-25,000 USD anuales recuperados por fichadas falsas detectadas con geolocalización</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-4xl mr-4 mt-1"></i>
+                        <div>
+                            <p class="font-bold text-xl mb-1">Implementación express</p>
+                            <p class="text-primary/80 text-lg">1-2 semanas desde el inicio hasta producción completa. Capacitación incluida</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-4xl mr-4 mt-1"></i>
+                        <div>
+                            <p class="font-bold text-xl mb-1">ROI garantizado</p>
+                            <p class="text-primary/80 text-lg">Recuperación de inversión en 2-4 meses según tamaño de nómina</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Gallery -->
+    <section id="screenshots" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+                    Conoce la plataforma
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Capturas reales del sistema CHECKPOINT en funcionamiento
+                </p>
+            </div>
+
+            <div class="screenshot-gallery grid md:grid-cols-2 gap-8">
+                <!-- Screenshot 1 -->
+                <div class="screenshot-item">
+                    <div class="bg-white p-6 rounded-t-2xl">
+                        <h3 class="text-2xl font-bold text-primary mb-2 flex items-center">
+                            <i class="fas fa-map-marker-check text-gold mr-3"></i>
+                            Gestión de Checkpoints
+                        </h3>
+                        <p class="text-gray-600">
+                            Visualiza todas las fichadas con ubicación, usuario, hora y foto.
+                            Filtra por lugar, usuario y fechas.
+                        </p>
+                    </div>
+                    <img src="assets/images/screenshot-checkpoints.png" alt="Gestión de Checkpoints" class="w-full">
+                </div>
+
+                <!-- Screenshot 2 -->
+                <div class="screenshot-item">
+                    <div class="bg-white p-6 rounded-t-2xl">
+                        <h3 class="text-2xl font-bold text-primary mb-2 flex items-center">
+                            <i class="fas fa-chart-bar text-gold mr-3"></i>
+                            Reporte de Jornadas
+                        </h3>
+                        <p class="text-gray-600">
+                            Reportes detallados con inicio/fin original y final, duración,
+                            almuerzo. Exporta directamente a Excel.
+                        </p>
+                    </div>
+                    <img src="assets/images/screenshot-reportes.png" alt="Reporte de Jornadas" class="w-full">
+                </div>
+
+                <!-- Screenshot 3 -->
+                <div class="screenshot-item">
+                    <div class="bg-white p-6 rounded-t-2xl">
+                        <h3 class="text-2xl font-bold text-primary mb-2 flex items-center">
+                            <i class="fas fa-calendar-alt text-gold mr-3"></i>
+                            Gestión de Novedades
+                        </h3>
+                        <p class="text-gray-600">
+                            Control total de vacaciones, licencias médicas, estudios.
+                            Tipos configurables según tu organización.
+                        </p>
+                    </div>
+                    <img src="assets/images/screenshot-novedades.png" alt="Gestión de Novedades" class="w-full">
+                </div>
+
+                <!-- Screenshot 4 -->
+                <div class="screenshot-item">
+                    <div class="bg-white p-6 rounded-t-2xl">
+                        <h3 class="text-2xl font-bold text-primary mb-2 flex items-center">
+                            <i class="fas fa-user-tie text-gold mr-3"></i>
+                            Legajos de Personal
+                        </h3>
+                        <p class="text-gray-600">
+                            Datos completos: personales, familiares, laborales, remuneración,
+                            formación, documentos y campos personalizados.
+                        </p>
+                    </div>
+                    <img src="assets/images/screenshot-legajos.png" alt="Legajos de Personal" class="w-full">
+                </div>
+
+                <!-- Screenshot 5 -->
+                <div class="screenshot-item">
+                    <div class="bg-white p-6 rounded-t-2xl">
+                        <h3 class="text-2xl font-bold text-primary mb-2 flex items-center">
+                            <i class="fas fa-fingerprint text-gold mr-3"></i>
+                            Datos Biométricos
+                        </h3>
+                        <p class="text-gray-600">
+                            Administra registros biométricos: facial, huella digital, iris.
+                            Múltiples métodos por usuario.
+                        </p>
+                    </div>
+                    <img src="assets/images/screenshot-biometricos.png" alt="Datos Biométricos" class="w-full">
+                </div>
+
+                <!-- Screenshot 6 -->
+                <div class="screenshot-item">
+                    <div class="bg-white p-6 rounded-t-2xl">
+                        <h3 class="text-2xl font-bold text-primary mb-2 flex items-center">
+                            <i class="fas fa-table text-gold mr-3"></i>
+                            Tablas Maestras
+                        </h3>
+                        <p class="text-gray-600">
+                            Configura obras sociales, lugares de trabajo, puestos.
+                            Sistema totalmente parametrizable.
+                        </p>
+                    </div>
+                    <img src="assets/images/screenshot-tablas.png" alt="Tablas Maestras" class="w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plataformas -->
+    <section class="py-16 bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">
+                    Multiplataforma
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Accede desde cualquier dispositivo
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl card-3d">
+                    <i class="fab fa-android text-green-600 text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-bold text-primary mb-2">Android</h3>
+                    <p class="text-gray-600">App nativa incluida. Disponible en Google Play Store.</p>
+                </div>
+
+                <div class="text-center p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl card-3d">
+                    <i class="fas fa-desktop text-blue-600 text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-bold text-primary mb-2">WebApp</h3>
+                    <p class="text-gray-600">Panel de administración completo desde cualquier navegador.</p>
+                </div>
+
+                <div class="text-center p-8 bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl card-3d">
+                    <i class="fab fa-apple text-purple-600 text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-bold text-primary mb-2">iOS (Add-on)</h3>
+                    <p class="text-gray-600">Versión iOS disponible como complemento opcional.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <div class="inline-block bg-gradient-to-r from-primary to-accent text-white px-8 py-4 rounded-full">
+                    <i class="fas fa-tablet-alt text-2xl mr-3"></i>
+                    <span class="text-lg font-semibold">También funciona en tablets para fichadas en oficina</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+                    Solicita una demostración
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Hablemos sobre cómo CHECKPOINT puede transformar la gestión de tu equipo
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-2xl font-bold text-primary mb-6">Información de contacto</h3>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-2xl text-gold mr-4 mt-1"></i>
+                            <div>
+                                <p class="font-bold text-lg">Oficina Principal</p>
+                                <p class="text-gray-600">Ciudad de La Paz 2963, 6B<br>Buenos Aires, Argentina</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <i class="fas fa-building text-2xl text-gold mr-4 mt-1"></i>
+                            <div>
+                                <p class="font-bold text-lg">Sucursal Pilar</p>
+                                <p class="text-gray-600">San José 1176<br>Pilar, Buenos Aires</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <i class="fas fa-umbrella-beach text-2xl text-gold mr-4 mt-1"></i>
+                            <div>
+                                <p class="font-bold text-lg">Sucursal Costa Atlántica</p>
+                                <p class="text-gray-600">De las Acacias 1033<br>Miramar, Buenos Aires</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <i class="fas fa-phone text-2xl text-gold mr-4 mt-1"></i>
+                            <div>
+                                <p class="font-bold text-lg">Teléfono</p>
+                                <p class="text-gray-600">+54 11 3436-5783<br>+54 230 4346897</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope text-2xl text-gold mr-4 mt-1"></i>
+                            <div>
+                                <p class="font-bold text-lg">Email</p>
+                                <p class="text-gray-600">
+                                    contacto@axiomacloud.com<br>
+                                    rnaranjo@axiomacloud.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <i class="fas fa-clock text-2xl text-gold mr-4 mt-1"></i>
+                            <div>
+                                <p class="font-bold text-lg">Horario</p>
+                                <p class="text-gray-600">Lunes a Viernes: 9:00 - 18:00<br>Soporte 24/7 disponible</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-gold/20">
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre completo</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent" placeholder="Juan Pérez">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email empresarial</label>
+                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent" placeholder="juan@empresa.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Empresa</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent" placeholder="Mi Empresa S.A.">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Cantidad de empleados</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent">
+                                <option>1-10 empleados</option>
+                                <option>11-50 empleados</option>
+                                <option>51-100 empleados</option>
+                                <option>101-500 empleados</option>
+                                <option>500+ empleados</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">¿Tienes personal en la calle?</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent">
+                                <option>Sí, tenemos personal móvil</option>
+                                <option>No, solo personal en oficina</option>
+                                <option>Ambos</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Cuéntanos tus necesidades</label>
+                            <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent" placeholder="¿Cómo gestionas actualmente el control de asistencia de tu equipo?"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full btn-primary px-6 py-4 rounded-lg text-primary font-bold text-lg shadow-lg">
+                            Solicitar Demostración <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <a href="https://axiomacloud.com/" target="_blank" rel="noopener noreferrer" class="transition hover:opacity-80">
+                            <img src="assets/images/axioma_logo.png" alt="AXIOMA Logo" class="h-12 brightness-0 invert">
+                        </a>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Control de asistencia inteligente con geolocalización, novedades y reportes completos.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Producto</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#funcionalidades" class="hover:text-gold transition">Funcionalidades</a></li>
+                        <li><a href="#caracteristicas" class="hover:text-gold transition">Características</a></li>
+                        <li><a href="#beneficios" class="hover:text-gold transition">Beneficios</a></li>
+                        <li><a href="#screenshots" class="hover:text-gold transition">Capturas</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Empresa</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="https://axiomacloud.com" class="hover:text-gold transition">Sobre AXIOMA</a></li>
+                        <li><a href="#contacto" class="hover:text-gold transition">Contacto</a></li>
+                        <li><a href="#" class="hover:text-gold transition">Casos de éxito</a></li>
+                        <li><a href="#" class="hover:text-gold transition">Partners</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Soporte</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-gold transition">Documentación</a></li>
+                        <li><a href="#" class="hover:text-gold transition">API</a></li>
+                        <li><a href="#" class="hover:text-gold transition">Centro de ayuda</a></li>
+                        <li><a href="#" class="hover:text-gold transition">Estado del servicio</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 AXIOMA CHECKPOINT. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
